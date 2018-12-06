@@ -1,25 +1,63 @@
-//Built off of commentList.js
+//Built off of commentBox.js
 
 //external imports
 import React from 'react';
 import $ from 'jquery';
-import Remarkable from 'remarkable';
 //local imports
-import Category from './category';
+import CategoryList from './categoryList';
+import CommentForm from './commentForm';
+//import Global from './global'
 
 module.exports = React.createClass({
-  render: function() {
-    var categoryNodes = this.props.data.map(function(category) {
-      return (
-        <Category type={Category.type}>
-        </Category>
-	<Category id={category.id} type={category.type}>
-      );
+  getInitialState: function() {
+        return {data: []};
+  },
+    loadCategoriesFromServer: function() {
+        if (this.state._isMounted) {
+            $.ajax({
+                url: API_URL,
+                dataType: 'json',
+                cache: false,
+            })
+                .done(function (result) {
+                    this.setState({data: result});
+                }.bind(this))
+                .fail(function (xhr, status, errorThrown) {
+                    console.error(API_URL, status, errorThrown.toString());
+                }.bind(this));
+        }
+    },
+  handleCategorySubmit: function(category) {
+    var categories = this.state.data;
+    category.id = Date.now();
+    var newCategories = categories.concat([category]);
+    this.setState({data: newCategories});
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: category,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        this.setState({data: categories});
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
     });
+  },
+  componentDidMount: function() {
+    this.loadCategoriesFromServer();
+    setInterval(this.loadCategoriesFromServer, this.props.pollInterval);
+  },
+  render: function() {
     return (
-      <div className="categoryList">
-        {categoryNodes}
+      <div className="homePage">
+        <h1>The Playlistanator</h1> <button>Add Category</button> <button>Add Playlist</button>
+          <h2>Categories</h2>
+  	  <CategoryList data={this.state.data} />
       </div>
     );
   }
 });
+

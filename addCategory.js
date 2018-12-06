@@ -30,6 +30,7 @@ module.exports = React.createClass({
         />
         <input type="submit" value="Post" />
       </form>
+      <button>Save</button> <button>Cancel</button>
     );
   }
 });

@@ -25,8 +25,8 @@ app.use(function(req, res, next) {
 });
 
 //--------------- Route functions start here ---------------\\
-app.get('/api/comments', function(req, res) {
-    db.collection('comments').find().toArray(function(err, data) {
+app.get('/api/categories', function(req, res) {
+    db.collection('categories').find().toArray(function(err, data) {
         if (err) {
             console.error(err);
             process.exit(1);

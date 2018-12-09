@@ -6,27 +6,27 @@ import $ from 'jquery';
 //local imports
 import CategoryList from './categoryList';
 // import CommentForm from './commentForm';
-//import Global from './global'
+import { API_CATS_URL, API_LISTS_URL, POLL_INTERVAL } from './global'
 
 module.exports = React.createClass({
   getInitialState: function() {
-        return {data: []};
+    return {data: [], _isMounted: false};
   },
-    loadCategoriesFromServer: function() {
-        if (this.state._isMounted) {
-            $.ajax({
-                url: API_URL,
-                dataType: 'json',
-                cache: false,
-            })
-                .done(function (result) {
-                    this.setState({data: result});
-                }.bind(this))
-                .fail(function (xhr, status, errorThrown) {
-                    console.error(API_URL, status, errorThrown.toString());
-                }.bind(this));
-        }
-    },
+  loadCategoriesFromServer: function() {
+      if (this.state._isMounted) {
+          $.ajax({
+              url: API_CATS_URL,
+              dataType: 'json',
+              cache: false,
+          })
+              .done(function (result) {
+                  this.setState({data: result});
+              }.bind(this))
+              .fail(function (xhr, status, errorThrown) {
+                  console.error(API_CATS_URL, status, errorThrown.toString());
+              }.bind(this));
+      }
+  },
   handleCategorySubmit: function(category) {
     var categories = this.state.data;
     category.id = Date.now();
@@ -47,15 +47,24 @@ module.exports = React.createClass({
     });
   },
   componentDidMount: function() {
+    this.state._isMounted = true;
     this.loadCategoriesFromServer();
-    setInterval(this.loadCategoriesFromServer, this.props.pollInterval);
+    setInterval(this.loadCategoriesFromServer, POLL_INTERVAL);
+  },
+  componentWillUnmount: function() {
+    // Reset the isMounted flag so that the loadCommentsFromServer callback
+    // stops requesting state updates when the commentList has been unmounted.
+    // This switch is optional, but it gets rid of the warning triggered by
+    // setting state on an unmounted component.
+    // See https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
+    this.state._isMounted = false;
   },
   render: function() {
     return (
       <div className="homePage">
         <h1>The Playlistinator</h1> <button>Add Category</button> <button>Add Playlist</button>
-          <h2>Categories</h2>
-  	  <CategoryList data={this.state.data} />
+        <h2>Categories</h2>
+  	    <CategoryList data={this.state.data} />
       </div>
     );
   }

@@ -11,7 +11,8 @@ module.exports = React.createClass({
   render: function() {
     var categoryNodes = this.props.data.map(function(category) {
       return (
-	      <Category id={category.id} type={category.type}>
+	      <Category id={category.id} artist={category.artist} key={category.id} type={category.type}>
+          {category.name}
         </Category>
       );
     });

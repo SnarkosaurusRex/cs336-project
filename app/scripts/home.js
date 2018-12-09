@@ -5,7 +5,7 @@ import React from 'react';
 import $ from 'jquery';
 //local imports
 import CategoryList from './categoryList';
-import CommentForm from './commentForm';
+// import CommentForm from './commentForm';
 //import Global from './global'
 
 module.exports = React.createClass({
@@ -53,7 +53,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="homePage">
-        <h1>The Playlistanator</h1> <button>Add Category</button> <button>Add Playlist</button>
+        <h1>The Playlistinator</h1> <button>Add Category</button> <button>Add Playlist</button>
           <h2>Categories</h2>
   	  <CategoryList data={this.state.data} />
       </div>

@@ -181,43 +181,6 @@ app.delete('/api/playlists/:id', function (req, res) {
 });
 
 
-////////////////////////////////////////////////////////////////////////////////
-app.get('/api/comments/:id', function(req, res) {
-    db.collection("comments").find({"id": Number(req.params.id)}).toArray(function(err, docs) {
-        if (err) throw err;
-        res.json(docs);
-    });
-});
-
-
-app.put('/api/comments/:id', function(req, res) {
-    var updateId = Number(req.params.id);
-    var update = req.body;
-    db.collection('comments').updateOne(
-        { id: updateId },
-        { $set: update },
-        function(err, result) {
-            if (err) throw err;
-            db.collection("comments").find({}).toArray(function(err, docs) {
-                if (err) throw err;
-                res.json(docs);
-            });
-        });
-});
-
-
-app.delete('/api/comments/:id', function(req, res) {
-    db.collection("comments").deleteOne(
-        {'id': Number(req.params.id)},
-        function(err, result) {
-            if (err) throw err;
-            db.collection("comments").find({}).toArray(function(err, docs) {
-                if (err) throw err;
-                res.json(docs);
-            });
-        });
-});
-
 
 // need to have MONGO_PASSWORD set as an environment variable for this to work
 MongoClient.connect('mongodb://cs336:' + process.env.MONGO_PASSWORD + '@ds227674.mlab.com:27674/playlistinator', function (err, client) {

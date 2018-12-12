@@ -112,9 +112,76 @@ app.post('/api/playlists', function(req, res) {
 	});
 
 	//TO-DO: need to figure out how to loop through checkboxes and add the necessary things to the memberships collection
+	res.send('Playlist added!'); //return just a status code instead?
 });
 
 
+//get all the info to display for the specified playlist
+app.get('/api/playlists/:id', function (req, res) {
+	var lstid = parseInt(req.params['id']);
+	var resData;
+
+	db.collection('playlists').find({'plID':lstid}, {name:1, artist:1, link:1, _id:0}).toArray(function(err, data) {
+		if (err) {
+			console.error(err);
+			process.exit(1);
+		}
+
+		//get all the categories the playlist is a member of
+		db.collection('memberships').find({'plID':lstid}, {catID:1, _id:0}).toArray(function(err, cats) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			resData = data;
+			cats.forEach(function(element) {
+				resData.push(element);
+			});
+
+			res.json(resData);
+		});
+	});
+});
+
+
+//edit the playlist info
+app.put('/api/playlists/:id', function (req, res) {
+	var lstid = parseInt(req.params['id']);
+
+	db.collection('playlists').updateOne({'plID':lstid}, {$set: {name: req.body.name, artist: req.body.artist, link: req.body.link}}, function(err, result) {
+		if (err) {
+			console.error(err);
+			process.exit(1);
+		}
+		//TO-DO: need to figure out how to update the categories the playlist is a member of
+	});
+	res.send('Playlist updated!'); //return just a status code instead?
+});
+
+
+//delete the playlist
+app.delete('/api/playlists/:id', function (req, res) {
+	var lstid = parseInt(req.params['id']);
+
+	db.collection('playlists').deleteOne({'plID':lstid}, function(err, result) {
+		if (err) {
+			console.error(err);
+			process.exit(1);
+		}
+	});
+	
+	db.collection('memberships').deleteMany({'plID':lstid}, function(err, result) {
+		if (err) {
+			console.error(err);
+			process.exit(1);
+		}
+	});
+
+	res.send('Playlist deleted!'); //return just a status code instead?
+});
+
+
+////////////////////////////////////////////////////////////////////////////////
 app.get('/api/comments/:id', function(req, res) {
     db.collection("comments").find({"id": Number(req.params.id)}).toArray(function(err, docs) {
         if (err) throw err;

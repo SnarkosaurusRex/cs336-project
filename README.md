@@ -1,5 +1,5 @@
 # Project Vision Statement
-*Team Members: Natalie Knapp & Lydia Holtrop*
+*Team Members: Natalie Knapp & Lydia Holtrop*<br/>
 *Heroku Application URL: https://playlistinator.herokuapp.com/*
 
 This app will be a sort of interactive library of YouTube playlists. I (SnarkosaurusRex) listen to tons of music on YouTube, and currently the way I keep track of all of the links to my playlists is in Chrome bookmarks sorted into bookmark folders by category. Sometimes, though, I'll have a playlist that could fit into multiple categories, in which case I'll have to just pick one of the folders to put it in, and then later when I want to find that playlist again, I might not remember which category I put it in, and as a result it might take me a while to find it. That in mind, one of the key features of this app will be that a playlist can be included in multiple categories. There will also be a way to view a nicely-formatted list of all playlists (including clickable links), as well as the ability to view a list of the playlists in each category. Other functionality will of course include the ability to add new playlists to the library, as well as the ability to edit or remove existing playlists.

@@ -18,49 +18,70 @@ module.exports = React.createClass({
   },
   handleCategoriesChange: function(e) {
     this.setState({categories: e.target.value});
-  }
+  },
   handleSubmit: function(e) {
     e.preventDefault();
     var name = this.state.name.trim();
     var artist = this.state.artist.trim();
     var link = this.state.link.trim();
     var categories = this.state.categories.trim();
-    if (!name || !artist || !link !categories) {
+    if (!name || !artist || !link /*!categories*/) {
       return;
     }
     this.props.onCommentSubmit({name: name, artist: artist, link:link});
-    this.setState({name: '', artist, '', link: '', categories: ''});
+    this.setState({name: '', artist: '', link: '', categories: ''});
   },
   render: function() {
     return (
-      <form className="playlistForm" onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="Treasure Planet"
-          value={this.state.name}
-          onChange={this.handleNameChange}
-        />
-        <input
-          type="text"
-          placeholder="James N. Howard"
-          value={this.state.artist}
-          onChange={this.handleArtistChange}
-        />
-        <input
-          type="text"
-          placeholder="www.youtube.com/Treasure_Planet"
-          value={this.state.link}
-          onChange={this.handleLinkChange}
-        />
-        <input
-          type="text"
-          placeholder="Soundtracks, Instrumental" //a text box for right now, will eventually be modified to a selection list
-          value={this.state.categories}
-          onChange={this.handleCategoriesChange}
-        />
-        <input type="submit" value="Post" />
-      </form>
+      <div className="playlistFormPage">
+        <h1>Playlist Details</h1>
+        <form className="playlistForm" id="playlistForm" onSubmit={this.handleSubmit}>
+          <div className="inputLabel">Name:</div><input
+            type="text"
+            placeholder="Treasure Planet"
+            value={this.state.name}
+            onChange={this.handleNameChange}
+          />
+          <br/>
+          Artist/Composer/Whatever: 
+          <input
+            type="text"
+            placeholder="James N. Howard"
+            value={this.state.artist}
+            onChange={this.handleArtistChange}
+          />
+          <br/>
+          Link: 
+          <input
+            type="text"
+            placeholder="www.youtube.com/Treasure_Planet"
+            value={this.state.link}
+            onChange={this.handleLinkChange}
+          />
+          <br/>
+          <div className="inputLabel">Categories:</div>
+          <input
+            type="text"
+            placeholder="Soundtracks, Instrumental" //a text box for right now, will eventually be modified to a selection list
+            value={this.state.categories}
+            onChange={this.handleCategoriesChange}
+          />
+
+
+          <br/>
+          <input type="submit" value="Post" />
+        </form>
+      </div>
     );
   }
 });
 
+// Using https://stackoverflow.com/questions/14853779/adding-input-elements-dynamically-to-form
+//    and http://jsfiddle.net/t656N/1/ for reference here - not sure where this needs to go, but
+//    just gonna work on it here for now:
+
+function addCheckboxes(){
+  // GET request to '/api/categories'
+  var container = document.getElementById("playlistForm");
+  //loop through the cats retrieved from the DB and add a checkbox for each
+}

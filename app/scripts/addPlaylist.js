@@ -2,6 +2,7 @@
 
 import React from 'react';
 import $ from 'jquery';
+import {API_LISTS_URL} from './global';
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -33,14 +34,14 @@ module.exports = React.createClass({
   },
   handleDelete: function(e) { //taken mostly from commentForm.js
         $.ajax({
-            url: API_URL + "/" + this.props.params.id,
+            url: API_LISTS_URL + "/" + this.props.params.id,
             type: 'DELETE',
         })
             .done(function (playlists) {
                 this.context.router.push('/');
             }.bind(this))
             .fail(function (xhr, status, errorThrown) {
-                console.error(API_URL, status, errorThrown.toString());
+                console.error(API_LISTS_URL, status, errorThrown.toString());
             }.bind(this));
  
   },

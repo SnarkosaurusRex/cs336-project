@@ -88,7 +88,6 @@ module.exports = React.createClass({
 
 
           <br/>
-          <input type="submit" /*value="Post"*/ /> // won't always be a post value since not always submitting - sometimes canceling or deleting
         </form>
       <button type="button" onClick={this.handleSubmit}>Save</button>
       <button type="button" onClick={this.handleCancel}>Cancel</button>

@@ -15,7 +15,7 @@ module.exports = React.createClass({
     return (
       <div className="category">
         <h2 className="playlistList">
-          {this.props.playlistList} //list of all the playlists in this category
+          {this.props.playlistList}
         </h2>
         <span dangerouslySetInnerHTML={this.rawMarkup()} />
       </div>

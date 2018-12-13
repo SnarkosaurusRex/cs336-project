@@ -47,8 +47,8 @@ module.exports = React.createClass({
   handleCancel: function(e) {
   //doesn't really do anything
  //just clears the text boxes?
-    this.setState({name: '', artist: '', link: '', categories: ''}
-  }
+    this.setState({name: '', artist: '', link: '', categories: ''});
+  },
   render: function() {
     return (
       <div className="playlistFormPage">

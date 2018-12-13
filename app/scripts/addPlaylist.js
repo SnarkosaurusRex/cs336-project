@@ -31,6 +31,24 @@ module.exports = React.createClass({
     this.props.onCommentSubmit({name: name, artist: artist, link:link});
     this.setState({name: '', artist: '', link: '', categories: ''});
   },
+  handleDelete: function(e) { //taken mostly from commentForm.js
+        $.ajax({
+            url: API_URL + "/" + this.props.params.id,
+            type: 'DELETE',
+        })
+            .done(function (playlists) {
+                this.context.router.push('/');
+            }.bind(this))
+            .fail(function (xhr, status, errorThrown) {
+                console.error(API_URL, status, errorThrown.toString());
+            }.bind(this));
+ 
+  },
+  handleCancel: function(e) {
+  //doesn't really do anything
+ //just clears the text boxes?
+    this.setState({name: '', artist: '', link: '', categories: ''}
+  }
   render: function() {
     return (
       <div className="playlistFormPage">
@@ -69,8 +87,11 @@ module.exports = React.createClass({
 
 
           <br/>
-          <input type="submit" value="Post" />
+          <input type="submit" /*value="Post"*/ /> // won't always be a post value since not always submitting - sometimes canceling or deleting
         </form>
+      <button type="button" onClick={this.handleSubmit}>Save</button>
+      <button type="button" onClick={this.handleCancel}>Cancel</button>
+      <button type="button" onClick={this.handleDelete}>Delete</button>
       </div>
     );
   }

@@ -17,7 +17,7 @@ module.exports = React.createClass({
     this.props.onCategorySubmit({name: name});
     this.setState({name: ''});
   },
-  saveFunction: function () {
+  handleSave: function () {
     e.preventDefault();
     var name = this.state.category.trim();
     if (!name) {
@@ -27,12 +27,12 @@ module.exports = React.createClass({
     this.setState({category: ''});
 
   },
-  cancelFunction: function () {
+  handleCancel: function () {
     //dont really do anything
     //just clear the text box
     this.setState({category: ''});
   },
-  deleteFunction(): function () {
+  handleDelete(): function () {
         $.ajax({
             url: API_URL + "/" + this.props.params.id,
             type: 'DELETE',
@@ -59,9 +59,9 @@ module.exports = React.createClass({
  //       <input type="submit" value="Post" />
 	<input id="categoryName">
       </form>
-      <button type="button" onClick={this.saveFunction}>Save</button>
-      <button type="button" onClick={this.cancelFunction}>Cancel</button>
-      <button type="button" onClick={this.deleteFunction}>Delete</button>
+      <button type="button" onClick={this.handleSave}>Save</button>
+      <button type="button" onClick={this.handleCancel}>Cancel</button>
+      <button type="button" onClick={this.handleDelete}>Delete</button>
     );
   }
 });

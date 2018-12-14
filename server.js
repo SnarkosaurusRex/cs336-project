@@ -50,7 +50,7 @@ app.post('/api/categories', function(req, res) {
             process.exit(1);
         }
     });
-    res.send('Category added!'); //should this return just a status code instead?
+    res.json(newCategory); //send back a json response to appease the ajax call :P
 });
 
 

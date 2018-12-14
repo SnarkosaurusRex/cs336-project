@@ -55,8 +55,8 @@ module.exports = React.createClass({
     return (
       <div className="homePage">
         <h1>The Playlistinator</h1>
-	<Link to={'/addCategory'} className="pseudoButton">Add Category</Link>
-	&nbsp; &nbsp; &nbsp;
+      	<Link to={'/addCategory'} className="pseudoButton">Add Category</Link>
+	      &nbsp; &nbsp; &nbsp;
         <Link to={'/addPlaylist'} className="pseudoButton">Add Playlist</Link>
         <h2>Categories</h2>
   	    <CategoryList data={this.state.data} />

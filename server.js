@@ -3,6 +3,7 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+const httpStatus = require('http-status-codes');
 var app = express();
 var db;
 var APP_PATH = path.join(__dirname, 'dist');
@@ -112,7 +113,9 @@ app.post('/api/playlists', function(req, res) {
 	});
 
 	//TO-DO: need to figure out how to loop through checkboxes and add the necessary things to the memberships collection
-	res.send('Playlist added!'); //return just a status code instead?
+	// res.send('Playlist added!'); //return just a status code instead?
+	console.log("succeeded, now sending response...");
+	res.sendStatus(200);
 });
 
 

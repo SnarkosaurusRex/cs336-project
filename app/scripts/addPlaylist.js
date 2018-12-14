@@ -5,6 +5,9 @@ import $ from 'jquery';
 import {API_LISTS_URL} from './global';
 
 module.exports = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object
+  },
   getInitialState: function() {
     return {name: '', artist: '', link: '', categories: ''}; //where categories is a list
   },
@@ -22,15 +25,34 @@ module.exports = React.createClass({
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    var name = this.state.name.trim();
-    var artist = this.state.artist.trim();
-    var link = this.state.link.trim();
-    var categories = this.state.categories.trim();
-    if (!name || !artist || !link /*!categories*/) {
+    var category = {
+      name: this.state.name.trim(),
+      artist: this.state.artist.trim(),
+      link: this.state.link.trim()
+      // var categories = this.state.categories.trim();
+    };
+    if (!category.name || !category.link) { // only require playlist name and link
+     //this should really give more visible/obvious feedback to the user, but this'll suffice for now
+      console.error("Playlist name and link are required");
       return;
     }
-    this.props.onCommentSubmit({name: name, artist: artist, link:link});
+    // this.props.onCategorySubmit({name: name, artist: artist, link: link});
     this.setState({name: '', artist: '', link: '', categories: ''});
+
+    $.ajax({
+      url: API_LISTS_URL,
+      dataType: 'json',
+      type: 'POST',
+      data: category,
+      success: function(data) {
+        console.log("success!");
+        // show user a success message?
+        this.context.router.push('/');
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(API_LISTS_URL, status, err.toString());
+      }.bind(this)
+    });
   },
   handleDelete: function(e) { //taken mostly from commentForm.js
         $.ajax({
@@ -47,8 +69,9 @@ module.exports = React.createClass({
   },
   handleCancel: function(e) {
   //doesn't really do anything
- //just clears the text boxes?
+  //just clears the text boxes?
     this.setState({name: '', artist: '', link: '', categories: ''});
+    this.context.router.push('/');
   },
   render: function() {
     return (

@@ -6,37 +6,54 @@ import $ from 'jquery';
 import {API_CATS_URL} from './global';
 
 module.exports = React.createClass({
-  getInitialState: function() {
-    return {name: ''}; //should have contents (list of all playlists in category) here?
+  contextTypes: {
+    router: React.PropTypes.object
   },
-  handleSave: function () {
+  getInitialState: function() {
+    return {name: ''};
+  },
+  handleNameChange: function(e) {
+    this.setState({name: e.target.value});
+  },
+  handleSave: function(e) {
     e.preventDefault();
-    var name = this.state.category.trim();
-    if (!name) {
+    var newCat = {
+      name: this.state.name.trim()
+    };
+    if (!newCat.name) {
       return;
     }
-    this.props.onCategorySubmit({category: name});
     this.setState({category: ''});
+    $.ajax({
+      url: API_CATS_URL,
+      dataType: 'json',
+      type: 'POST',
+      data: newCat,
+      success: function(result) {
+        // show user a success message?
+        this.context.router.push('/');
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(API_CATS_URL, status, err.toString());
+      }.bind(this)
+    });
   },
   handleCancel: function () {
-    //dont really do anything
-    //just clear the text box
     this.setState({category: ''});
+    this.context.router.push('/');
   },
   handleDelete: function () {
-        $.ajax({
-            url: API_CATS_URL + "/" + this.props.params.id,
-            type: 'DELETE',
-        })
-            .done(function (categories) {
-                this.context.router.push('/');
-            }.bind(this))
-            .fail(function (xhr, status, errorThrown) {
-                console.error(API_CATS_URL, status, errorThrown.toString());
-            }.bind(this));
-
+    $.ajax({
+        url: API_CATS_URL + "/" + this.props.params.id,
+        type: 'DELETE',
+    })
+      .done(function (categories) {
+          this.context.router.push('/');
+      }.bind(this))
+      .fail(function (xhr, status, errorThrown) {
+          console.error(API_CATS_URL, status, errorThrown.toString());
+      }.bind(this));
   },
-//        <Link to={'/'} className="pseudoButton">Home</Link>
   render: function() {
     return (
       <div className="categoryFormPage">
@@ -47,7 +64,7 @@ module.exports = React.createClass({
             type="text"
             placeholder="Category name"
             value={this.state.category}
-            onChange={this.handleCategoryChange}
+            onChange={this.handleNameChange}
           />
         </form>
         <button type="button" onClick={this.handleSave}>Save</button>

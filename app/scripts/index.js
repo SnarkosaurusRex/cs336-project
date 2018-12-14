@@ -5,7 +5,6 @@ import {Router, Route, browserHistory} from 'react-router';
 import Home from './home.js';
 import AddPlaylist from './addPlaylist.js';
 import AddCategory from './addCategory';
-// import CommentEdit from './CommentEdit.js';
 
 // import '../css/base.css';
 

@@ -3,6 +3,7 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+const httpStatus = require('http-status-codes');
 var app = express();
 var db;
 var APP_PATH = path.join(__dirname, 'dist');
@@ -49,7 +50,7 @@ app.post('/api/categories', function(req, res) {
             process.exit(1);
         }
     });
-    res.send('Category added!'); //should this return just a status code instead?
+    res.json(newCategory); //send back a json response to appease the ajax call :P
 });
 
 
@@ -101,7 +102,8 @@ app.post('/api/playlists', function(req, res) {
 		plID: Date.now(),
 		name: req.body.name,
 		artist: req.body.artist,
-		link: req.body.link
+		link: req.body.link,
+		categories: req.body.categories
 	};
 
 	db.collection('playlists').insertOne(newPlaylist, function(err, result) {
@@ -110,9 +112,32 @@ app.post('/api/playlists', function(req, res) {
 			process.exit(1);
 		}
 	});
+	//handle categories
+	var cats = newPlaylist.categories.split(',');
+	var membEntry = {
+		plID: newPlaylist.plID,
+		catID: ""
+	};
+	cats.forEach(function(c) {
+		db.collection('categories').findOne({'name':c}, {catID:1, _id:0}, function(err, rslt) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			membEntry.catID = rslt.catID;
+			db.collection('memberships').insertOne(membEntry, function(err, result) {
+				if (err) {
+					console.error(err);
+					process.exit(1);
+				}
+			});
+		});
+		for (i=0; i<1000000; i++) {
+			var wait = "naptime!";
+		}
+	});
 
-	//TO-DO: need to figure out how to loop through checkboxes and add the necessary things to the memberships collection
-	res.send('Playlist added!'); //return just a status code instead?
+	res.json(newPlaylist); //send back a json response to appease the ajax call :P
 });
 
 

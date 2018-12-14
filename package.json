@@ -23,6 +23,7 @@
         "mongodb": "^2.2.19",
         "postcss-loader": "^1.0.0",
         "react": "^15.3.2",
+        "react-collapsible": "^2.3.2",
         "react-dom": "^15.3.2",
         "react-router": "^3.0.0",
         "remarkable": "^1.7.1",
@@ -31,7 +32,8 @@
     },
     "devDependencies": {
         "nodemon": "^1.11.0",
-        "webpack-dev-server": "^1.16.2"
+        "webpack-dev-server": "^1.16.2",
+        "ws": "3.3.2"
     },
     "scripts": {
         "build": "webpack --progress",

@@ -6,6 +6,8 @@ import Home from './home.js';
 import AddPlaylist from './addPlaylist.js';
 import AddCategory from './addCategory';
 
+import './base.css';
+
 // import '../css/base.css';
 
 ReactDOM.render((

@@ -31,7 +31,7 @@ module.exports = React.createClass({
       link: this.state.link.trim(),
       categories: this.state.categories.trim()
     };
-    if (!category.name || !category.link) { // only require playlist name and link
+    if (!newPlaylist.name || !newPlaylist.link) { // only require playlist name and link
      //this should really give more visible/obvious feedback to the user, but this'll suffice for now
       console.error("Playlist name and link are required");
       return;

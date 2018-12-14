@@ -112,8 +112,31 @@ app.post('/api/playlists', function(req, res) {
 			process.exit(1);
 		}
 	});
+	//handle categories
+	var cats = newPlaylist.categories.split(',');
+	var membEntry = {
+		plID: newPlaylist.plID,
+		catID: ""
+	};
+	cats.forEach(function(c) {
+		db.collection('categories').findOne({'name':c}, {catID:1, _id:0}, function(err, rslt) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			membEntry.catID = rslt.catID;
+			db.collection('memberships').insertOne(membEntry, function(err, result) {
+				if (err) {
+					console.error(err);
+					process.exit(1);
+				}
+			});
+		});
+		for (i=0; i<1000000; i++) {
+			var wait = "naptime!";
+		}
+	});
 
-	//TO-DO: need to figure out how to loop through checkboxes and add the necessary things to the memberships collection
 	res.json(newPlaylist); //send back a json response to appease the ajax call :P
 });
 

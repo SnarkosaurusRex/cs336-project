@@ -44,8 +44,7 @@ module.exports = React.createClass({
       dataType: 'json',
       type: 'POST',
       data: category,
-      success: function(data) {
-        console.log("success!");
+      success: function(result) {
         // show user a success message?
         this.context.router.push('/');
       }.bind(this),

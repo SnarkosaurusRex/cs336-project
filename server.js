@@ -102,7 +102,8 @@ app.post('/api/playlists', function(req, res) {
 		plID: Date.now(),
 		name: req.body.name,
 		artist: req.body.artist,
-		link: req.body.link
+		link: req.body.link,
+		categories: req.body.categories
 	};
 
 	db.collection('playlists').insertOne(newPlaylist, function(err, result) {
@@ -113,9 +114,7 @@ app.post('/api/playlists', function(req, res) {
 	});
 
 	//TO-DO: need to figure out how to loop through checkboxes and add the necessary things to the memberships collection
-	// res.send('Playlist added!'); //return just a status code instead?
-	console.log("succeeded, now sending response...");
-	res.sendStatus(200);
+	res.json(newPlaylist); //send back a json response to appease the ajax call :P
 });
 
 

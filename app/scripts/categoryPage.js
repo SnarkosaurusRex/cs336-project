@@ -33,13 +33,19 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="categoryPage">
-	currentCategory = this.state.category.trim();
+	currentCategory = this.state.category.trim(); //title of page is the category's name
 	<h1>
 	   <script type="text/javascript">
-		document.write(currentCategory)
+		document.write(currentCategory) //category name put here
 	   </script>
 	</h1>
+	<Link to={'/home'} className="pseudoButton">Home</Link>
+	<Link to={'/addCategory'} className="pseduoButton">Edit Category</Link> //same page as add category
+	<Link to={'/addCategory'} className="pseudoButton">Add Category</Link>//same as edit category - figure out they clicked add category rather than edit so delete button is not there?
+	<Link to={/addPlaylist'} className="pseudoButton>Add Playlist</Link>
         <CategoryList data={this.state.data} />
+	//need to figure out how to create a button to Edit Playlist for each playlist in thsi cateogry
+	//so that the Edit Playlist button takes you to an edit page specific to that playlist
       </div>
     );
   }

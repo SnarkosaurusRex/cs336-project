@@ -9,15 +9,6 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {name: ''}; //should have contents (list of all playlists in category) here?
   },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var name = this.state.name.trim();
-    if (!name) {
-      return;
-    }
-    this.props.onCategorySubmit({name: name});
-    this.setState({name: ''});
-  },
   handleSave: function () {
     e.preventDefault();
     var name = this.state.category.trim();
@@ -26,7 +17,6 @@ module.exports = React.createClass({
     }
     this.props.onCategorySubmit({category: name});
     this.setState({category: ''});
-
   },
   handleCancel: function () {
     //dont really do anything
@@ -46,20 +36,19 @@ module.exports = React.createClass({
             }.bind(this));
 
   },
+//        <Link to={'/'} className="pseudoButton">Home</Link>
   render: function() {
     return (
       <div className="categoryFormPage">
+	<h1>Edit or Add a Category</h1>
         <form className="categoryForm" onSubmit={this.handleSubmit}>
-    <h>The name of the category to be edited or created</h> //lables the text box
+    <h>The name of the category to be edited or created </h>
           <input
             type="text"
             placeholder="Category name"
             value={this.state.category}
             onChange={this.handleCategoryChange}
           />
-    <input type ="submit"/> //because won't always be post if hit cancel or delete
-  //       <input type="submit" value="Post" />
-    <input id="categoryName"/>
         </form>
         <button type="button" onClick={this.handleSave}>Save</button>
         <button type="button" onClick={this.handleCancel}>Cancel</button>

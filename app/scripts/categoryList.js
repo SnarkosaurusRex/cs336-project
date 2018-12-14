@@ -4,12 +4,11 @@ import React from 'react';
 import $ from 'jquery';
 import Remarkable from 'remarkable';
 import Category from './category';
-//import PlaylistList from './playlistList';
-//import {API_CATS_URL, API_LISTS_URL, POLL_INTERVAL} from './global';
+
 import {API_CATS_URL} from './global';
 
 import Collapsible from 'react-collapsible';
-import './base.css';
+import '../css/base.css';
 
 module.exports = React.createClass({
   render: function() {
@@ -31,7 +30,3 @@ module.exports = React.createClass({
     );
   }
 });
-
-//<PlaylistList data-{this.state.data}/>
-//            <Link to={'/addPlaylist'} className="pseudoButton">Add Playlist</Link>
-

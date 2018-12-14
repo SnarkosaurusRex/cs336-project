@@ -5,8 +5,11 @@ import $ from 'jquery';
 import {API_LISTS_URL} from './global';
 
 module.exports = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object
+  },
   getInitialState: function() {
-    return {name: '', artist: '', link: '', categories: ''}; //where categories is a list
+    return {name: '', artist: '', link: '', categories: ''};
   },
   handleNameChange: function(e) {
     this.setState({name: e.target.value});
@@ -20,35 +23,50 @@ module.exports = React.createClass({
   handleCategoriesChange: function(e) {
     this.setState({categories: e.target.value});
   },
-  handleSubmit: function(e) {
+  handleSave: function(e) {
     e.preventDefault();
-    var name = this.state.name.trim();
-    var artist = this.state.artist.trim();
-    var link = this.state.link.trim();
-    var categories = this.state.categories.trim();
-    if (!name || !artist || !link /*!categories*/) {
+    var newPlaylist = {
+      name: this.state.name.trim(),
+      artist: this.state.artist.trim(),
+      link: this.state.link.trim(),
+      categories: this.state.categories.trim()
+    };
+    if (!newPlaylist.name || !newPlaylist.link) { // only require playlist name and link
+     //this should really give more visible/obvious feedback to the user, but this'll suffice for now
+      console.error("Playlist name and link are required");
       return;
     }
-    this.props.onCommentSubmit({name: name, artist: artist, link:link});
     this.setState({name: '', artist: '', link: '', categories: ''});
-  },
-  handleDelete: function(e) { //taken mostly from commentForm.js
-        $.ajax({
-            url: API_LISTS_URL + "/" + this.props.params.id,
-            type: 'DELETE',
-        })
-            .done(function (playlists) {
-                this.context.router.push('/');
-            }.bind(this))
-            .fail(function (xhr, status, errorThrown) {
-                console.error(API_LISTS_URL, status, errorThrown.toString());
-            }.bind(this));
- 
+
+    $.ajax({
+      url: API_LISTS_URL,
+      dataType: 'json',
+      type: 'POST',
+      data: newPlaylist,
+      success: function(result) {
+        // show user a success message?
+        this.context.router.push('/');
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(API_LISTS_URL, status, err.toString());
+      }.bind(this)
+    });
   },
   handleCancel: function(e) {
-  //doesn't really do anything
- //just clears the text boxes?
     this.setState({name: '', artist: '', link: '', categories: ''});
+    this.context.router.push('/');
+  },
+  handleDelete: function(e) {
+    $.ajax({
+        url: API_LISTS_URL + "/" + this.props.params.id,
+        type: 'DELETE',
+    })
+      .done(function (playlists) {
+          this.context.router.push('/');
+      }.bind(this))
+      .fail(function (xhr, status, errorThrown) {
+          console.error(API_LISTS_URL, status, errorThrown.toString());
+      }.bind(this));
   },
   render: function() {
     return (
@@ -89,7 +107,7 @@ module.exports = React.createClass({
 
           <br/>
         </form>
-      <button type="button" onClick={this.handleSubmit}>Save</button>
+      <button type="button" onClick={this.handleSave}>Save</button>
       <button type="button" onClick={this.handleCancel}>Cancel</button>
       <button type="button" onClick={this.handleDelete}>Delete</button>
       </div>

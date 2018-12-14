@@ -1,11 +1,8 @@
 //Built off of commentBox.js
-
-//external imports
 import React from 'react';
 import $ from 'jquery';
-//local imports
+import {Link} from 'react-router';
 import CategoryList from './categoryList';
-// import CommentForm from './commentForm';
 import { API_CATS_URL, API_LISTS_URL, POLL_INTERVAL } from './global'
 
 module.exports = React.createClass({
@@ -52,17 +49,15 @@ module.exports = React.createClass({
     setInterval(this.loadCategoriesFromServer, POLL_INTERVAL);
   },
   componentWillUnmount: function() {
-    // Reset the isMounted flag so that the loadCommentsFromServer callback
-    // stops requesting state updates when the commentList has been unmounted.
-    // This switch is optional, but it gets rid of the warning triggered by
-    // setting state on an unmounted component.
-    // See https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
     this.state._isMounted = false;
   },
   render: function() {
     return (
       <div className="homePage">
-        <h1>The Playlistinator</h1> <button>Add Category</button> <button>Add Playlist</button>
+        <h1>The Playlistinator</h1>
+	<Link to={'/addCategory'} className="pseudoButton">Add Category</Link>
+	&nbsp; &nbsp; &nbsp;
+        <Link to={'/addPlaylist'} className="pseudoButton">Add Playlist</Link>
         <h2>Categories</h2>
   	    <CategoryList data={this.state.data} />
       </div>

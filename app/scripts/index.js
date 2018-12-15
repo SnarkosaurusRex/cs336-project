@@ -13,7 +13,6 @@ ReactDOM.render((
             <Route path="/" component={Home}/>
             <Route path="/addPlaylist" component={AddPlaylist}/>
             <Route path="/addCategory" component={AddCategory}/>
-            {/* <Route path="/:id" component={CommentEdit}/> */}
         </Router>
     ), document.getElementById('content')
 );

@@ -4,15 +4,19 @@ import React from 'react';
 import $ from 'jquery';
 import Remarkable from 'remarkable';
 import Playlist from './playlist';
-import {API_CATS_URL} from './global';
+import {API_LISTS_URL} from './global';
 
 module.exports = React.createClass({
 
   render: function() {
     var playlistNodes = this.props.data.map(function(playlist) {
       return (
-        <Playlist name={Playlist.name}, artist={Playlist.artist}, link={Playlist.link}>
-	</Playlist>
+        <Playlist id={playlist.plID} name={playlist.name} artist={playlist.artist}
+                  link={playlist.link} key={playlist.plID}>
+          {playlist.name} {/* change this to be an <a> with an href of playlist.link? */}
+          {playlist.artist}
+          {playlist.link}
+        </Playlist>
       );
   });
     return (

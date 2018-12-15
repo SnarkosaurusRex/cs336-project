@@ -12,9 +12,9 @@ module.exports = React.createClass({
     var playlistNodes = this.props.data.map(function(playlist) {
       return (
         <Playlist name={Playlist.name}, artist={Playlist.artist}, link={Playlist.link}>
-        </Playlist>
+	</Playlist>
       );
-    });
+  });
     return (
       <div className="playlistList">
         {playlistNodes}

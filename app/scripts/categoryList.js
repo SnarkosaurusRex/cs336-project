@@ -1,5 +1,3 @@
-//Built off of commentList.js
-
 import React from 'react';
 import $ from 'jquery';
 import Remarkable from 'remarkable';
@@ -14,13 +12,10 @@ module.exports = React.createClass({
   render: function() {
     var categoryNodes = this.props.data.map(function(category) {
       return (
-	<h4><Collapsible trigger={category.name}>
-	    <p> Lists of playlists in {category.name}
-	    &nbsp; &nbsp; &nbsp;
-            <a href="/addPlaylist">Add Playlist</a></p>
-	    </Collapsible>
-	</h4>
-
+        <h3><Collapsible trigger={category.name} transitionTime={150}>
+            <p> List of playlists in {category.name}</p>
+            </Collapsible>
+        </h3>
       );
     });
     return (

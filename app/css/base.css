@@ -1,20 +1,29 @@
-/* Style the button that is used to open and close the collapsible content */
-h4 {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 50%;
+h1 {
+  font-family: 'Gill Sans', 'sans-serif';
+  font-weight: bolder;
+}
+
+/* (Using h3 as headings for collapsible sections) */
+h3 {
+  background-color: #d1b3ff;
+  color: #330080;
+  padding: 5px 18px;
   border: none;
   text-align: left;
   outline: none;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
 }
 
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+h3:hover {
+  background-color: #b380ff;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
 p {
-  background-color: #eee;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: lighter;
+  color: #330080;
+  padding: 0px 18px;
 }

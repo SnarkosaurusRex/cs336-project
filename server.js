@@ -78,7 +78,7 @@ app.put('/api/categories/:id', function (req, res) {
 			process.exit(1);
 		}
 	});
-	res.send('Category updated!'); //return just a status code instead?
+	res.send('Category updated!');
 });
 
 
@@ -92,7 +92,7 @@ app.delete('/api/categories/:id', function (req, res) {
 			process.exit(1);
 		}
 	});
-	res.send('Category deleted!'); //return just a status code instead?
+	res.send('Category deleted!');
 });
 
 
@@ -132,9 +132,13 @@ app.post('/api/playlists', function(req, res) {
 				}
 			});
 		});
-		for (i=0; i<1000000; i++) {
-			var wait = "naptime!";
-		}
+		/* This was a failed attempt to resolve an issue in which, if the new playlist was to be added to
+		 *	more than one category, Mongo for some reason tried to assign both documents in the
+		 *	memberships table the same _id value, which obviously caused problems
+		 */
+		// for (i=0; i<1000000; i++) {
+		// 	 var wait = "naptime!";
+		// }
 	});
 
 	res.json(newPlaylist); //send back a json response to appease the ajax call :P
@@ -180,7 +184,7 @@ app.put('/api/playlists/:id', function (req, res) {
 		}
 		//TO-DO: need to figure out how to update the categories the playlist is a member of
 	});
-	res.send('Playlist updated!'); //return just a status code instead?
+	res.send('Playlist updated!');
 });
 
 
@@ -202,7 +206,7 @@ app.delete('/api/playlists/:id', function (req, res) {
 		}
 	});
 
-	res.send('Playlist deleted!'); //return just a status code instead?
+	res.send('Playlist deleted!');
 });
 
 
@@ -213,11 +217,9 @@ MongoClient.connect('mongodb://cs336:' + process.env.MONGO_PASSWORD + '@ds227674
 
     db = client;
 
-    // Add this at the bottom, just before starting the server.
     app.use('*', express.static(APP_PATH));
 
     app.listen(app.get('port'), function() {
         console.log('Server started: http://localhost:' + app.get('port') + '/');
     });
 })
-

@@ -1,5 +1,4 @@
 //based on comment.js
-
 import React from 'react';
 import Remarkable from 'remarkable';
 

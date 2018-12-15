@@ -58,15 +58,16 @@ module.exports = React.createClass({
     return (
       <div className="categoryFormPage">
 	<h1>Edit or Add a Category</h1>
-        <form className="categoryForm" onSubmit={this.handleSubmit}>
-    <h>The name of the category to be edited or created </h>
-          <input
-            type="text"
-            placeholder="Category name"
-            value={this.state.category}
-            onChange={this.handleNameChange}
-          />
-        </form>
+    <form className="categoryForm" onSubmit={this.handleSubmit}>
+      Category name: <input
+        type="text"
+        placeholder="Category name"
+        size='44'
+        maxLength='60'
+        value={this.state.category}
+        onChange={this.handleNameChange}
+      />
+    </form>
         <button type="button" onClick={this.handleSave}>Save</button>
         <button type="button" onClick={this.handleCancel}>Cancel</button>
         <button type="button" onClick={this.handleDelete}>Delete</button>

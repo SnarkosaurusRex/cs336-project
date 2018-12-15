@@ -1,11 +1,7 @@
 import React from 'react';
-import $ from 'jquery';
-import Remarkable from 'remarkable';
-import Category from './category';
-
-import {API_CATS_URL} from './global';
-
 import Collapsible from 'react-collapsible';
+import Category from './category';
+import {API_CATS_URL} from './global';
 import '../css/base.css';
 
 module.exports = React.createClass({

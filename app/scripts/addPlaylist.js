@@ -1,4 +1,5 @@
 //Built off of commentForm.js
+//For both adding new playlists and editing existing playlists
 
 import React from 'react';
 import $ from 'jquery';

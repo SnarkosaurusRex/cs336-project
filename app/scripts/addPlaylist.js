@@ -73,38 +73,41 @@ module.exports = React.createClass({
       <div className="playlistFormPage">
         <h1>Playlist Details</h1>
         <form className="playlistForm" id="playlistForm" onSubmit={this.handleSubmit}>
-          <div className="inputLabel">Name:</div><input
+          Name: <input
             type="text"
-            placeholder="Treasure Planet"
+            placeholder="e.g. How to Train Your Dragon"
+            size='40'
+            maxLength='100'
             value={this.state.name}
             onChange={this.handleNameChange}
           />
           <br/>
-          Artist/Composer/Whatever: 
-          <input
+          Artist/Composer/Whatever: <input
             type="text"
-            placeholder="James N. Howard"
+            placeholder="e.g. John Powell"
+            size='30'
+            maxLength='100'
             value={this.state.artist}
             onChange={this.handleArtistChange}
           />
           <br/>
-          Link: 
-          <input
+          Link: <input
             type="text"
-            placeholder="www.youtube.com/Treasure_Planet"
+            placeholder="e.g. www.youtube.com/watch?v=dQw4w9WgXcQ"
+            size='45'
+            maxLength='100'
             value={this.state.link}
             onChange={this.handleLinkChange}
           />
           <br/>
-          <div className="inputLabel">Categories:</div>
-          <input
+          Categories: <input
             type="text"
-            placeholder="Soundtracks, Instrumental" //a text box for right now, will eventually be modified to a selection list
+            placeholder="separate with commas; e.g. Soundtracks,Instrumental" //a text box for right now, will eventually be modified to a selection list
+            size='50'
+            maxLength='100'
             value={this.state.categories}
             onChange={this.handleCategoriesChange}
           />
-
-
           <br/>
         </form>
       <button type="button" onClick={this.handleSave}>Save</button>
@@ -114,13 +117,3 @@ module.exports = React.createClass({
     );
   }
 });
-
-// Using https://stackoverflow.com/questions/14853779/adding-input-elements-dynamically-to-form
-//    and http://jsfiddle.net/t656N/1/ for reference here - not sure where this needs to go, but
-//    just gonna work on it here for now:
-
-function addCheckboxes(){
-  // GET request to '/api/categories'
-  var container = document.getElementById("playlistForm");
-  //loop through the cats retrieved from the DB and add a checkbox for each
-}
